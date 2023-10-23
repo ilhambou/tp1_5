@@ -3,6 +3,8 @@ package com.example._5iir;
 import com.example._5iir.entities.BankAccount;
 import com.example._5iir.enums.AccoutType;
 import com.example._5iir.repositories.BankAccountRepository;
+import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.SpringDocUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +14,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @SpringBootApplication
+
 public class Application {
 
     public static void main(String[] args) {
@@ -35,5 +38,19 @@ public class Application {
             }
         };
     }
+
+    @Bean
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+                .group("public-api")
+                .pathsToMatch("/bankAccounts/**") // Remplacez avec les chemins de vos opérations
+                .build();
+    }
+
+    static {
+        SpringDocUtils.getConfig()
+                .addRestControllers(Application.class);
+    }
+
 
 }
